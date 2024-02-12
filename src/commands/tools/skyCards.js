@@ -19,19 +19,29 @@ module.exports = {
 
         const newMessage = skylander;
         const skylanderName = skylander["name"]
+        const skylanderQuote = skylander["quote"]
         const skylanderRarity = skylander["rarities"]
+        const skylanderGame = skylander["game"]
         const skylanderCardBack = skylander["cardback"]
         const skylanderCardBack2 = "https://cdn.discordapp.com/attachments/1205284717705039962/1205885050827182090/Dark_Card.jpg"
         const skylanderCardFront = skylander["cardfront"]
-        const skylanderElement = skylander["element"]
+        const skylanderValue = skylander["value"]
 
         const SkyCard = new EmbedBuilder()
             .setTitle(`${skylanderName}`)
-            .setDescription(`Element: ${skylanderElement}`)
+            .setDescription(`${skylanderQuote}`)
             .setImage(`${skylanderCardFront}`)
             .addFields(
-                {name: 'Rarity:', value: `${skylanderRarity}`}
+                {name: '\u200B', value: '\u200B' },
+                {name: 'Rarity:', value: `${skylanderRarity}`, inline: true},
+                {name: 'Game:', value: `${skylanderGame}`, inline: true},
+                {name: 'Value:', value: `${skylanderValue}`, inline: true}
             )
+            .setTimestamp()
+            .setFooter({
+                text: client.user.tag,
+                icon: client.user.displayAvatarURL()
+            });
 
         const content = `Poortmeester ${interaction.user} heeft een kaart getrokken. Spannend!`;
         const content2 = `Achterkant: ${skylanderCardBack}`;
@@ -84,7 +94,7 @@ module.exports = {
                 await wait(3_00)
 
                 await interaction.editReply({
-                    content: content3
+                    embeds: [SkyCard]
                 });
 
             } else {
@@ -99,7 +109,7 @@ module.exports = {
                 await wait(1_500);
 
                 await interaction.editReply({
-                    content: content3,
+                    embeds: [SkyCard]
                 })
             }
         }
