@@ -1,3 +1,3 @@
 # Skylander Bot
 
-![Alt text](https://m.media-amazon.com/images/I/8103p4rYIQL._AC_UF894,1000_QL80_.jpg)
+![Alt text](https://static.wikia.nocookie.net/skylanders/images/0/00/Skylanders_Logo.png/revision/latest?cb=20200327134807)
