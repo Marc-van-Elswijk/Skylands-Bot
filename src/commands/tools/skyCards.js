@@ -1,5 +1,5 @@
-const { getSkylanderRandom } = require("skylander.js");
-const { SlashCommandBuilder } = require('discord.js');
+const getSkyCardRandom = require("skylander.js/src/methods/getSkyCardRandom");
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const wait = require('node:timers/promises').setTimeout;
 
 //cooldown const
@@ -12,7 +12,7 @@ module.exports = {
         .setName('skycard')
         .setDescription('Geeft je een random skylander kaart'),
     async execute(interaction, client) {
-        const skylander = await getSkylanderRandom();
+        const skylander = await getSkyCardRandom() ;
         const message = await interaction.deferReply({
             fetchReply: true
         });
@@ -24,6 +24,14 @@ module.exports = {
         const skylanderCardBack2 = "https://cdn.discordapp.com/attachments/1205284717705039962/1205885050827182090/Dark_Card.jpg"
         const skylanderCardFront = skylander["cardfront"]
         const skylanderElement = skylander["element"]
+
+        const SkyCard = new EmbedBuilder()
+            .setTitle(`${skylanderName}`)
+            .setDescription(`Element: ${skylanderElement}`)
+            .setImage(`${skylanderCardFront}`)
+            .addFields(
+                {name: 'Rarity:', value: `${skylanderRarity}`}
+            )
 
         const content = `Poortmeester ${interaction.user} heeft een kaart getrokken. Spannend!`;
         const content2 = `Achterkant: ${skylanderCardBack}`;
