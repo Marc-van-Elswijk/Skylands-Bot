@@ -1,0 +1,23 @@
+{
+  "name": "skylands-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/bot.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/rest": "^2.2.0",
+    "chalk": "^4.1.2",
+    "discord-api-types": "^0.37.69",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.1",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.1",
+    "ms": "^2.1.3",
+    "skylander.js": "^1.0.4"
+  }
+}
