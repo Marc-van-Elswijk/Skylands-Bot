@@ -1,9 +1,13 @@
 const getSkyCardRandom = require("skylander.js/src/methods/getSkyCardRandom");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const wait = require('node:timers/promises').setTimeout;
+const profileModel = require("../../schemas/profileSchema");
+
 
 //cooldown const
-const cooldown = new Set();
+const cooldown = 60000;
+//cooldown const
+const cooldowns = new Set();
 const cooldownTime = 60000;
 const cooldownStartTime = new Map();
 
@@ -12,15 +16,13 @@ module.exports = {
         .setName('skycard')
         .setDescription('Geeft je een random skylander kaart'),
     async execute(interaction, client) {
-        const skylander = await getSkyCardRandom() ;
-        const message = await interaction.deferReply({
-            fetchReply: true
-        });
+        const skylander = await getSkyCardRandom();
+        await interaction.deferReply({ fetchReply: true });
 
         const newMessage = skylander;
         const skylanderName = skylander["name"]
         const skylanderQuote = skylander["quote"]
-        const skylanderRarity = skylander["rarities"]
+        const skylanderRarity = skylander["rarity"]
         const skylanderGame = skylander["game"]
         const skylanderCardBack = skylander["cardback"]
         const skylanderCardBack2 = "https://cdn.discordapp.com/attachments/1205284717705039962/1205885050827182090/Dark_Card.jpg"
@@ -32,10 +34,10 @@ module.exports = {
             .setDescription(`${skylanderQuote}`)
             .setImage(`${skylanderCardFront}`)
             .addFields(
-                {name: '\u200B', value: '\u200B' },
-                {name: 'Rarity:', value: `${skylanderRarity}`, inline: true},
-                {name: 'Game:', value: `${skylanderGame}`, inline: true},
-                {name: 'Value:', value: `${skylanderValue}`, inline: true}
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Rarity:', value: `${skylanderRarity}`, inline: true },
+                { name: 'Game:', value: `${skylanderGame}`, inline: true },
+                { name: 'Value:', value: `${skylanderValue}`, inline: true }
             )
             .setTimestamp()
             .setFooter({
@@ -45,12 +47,12 @@ module.exports = {
 
         const content = `Poortmeester ${interaction.user} heeft een kaart getrokken. Spannend!`;
         const content2 = `Achterkant: ${skylanderCardBack}`;
-        const dark = `Achterkant: ${skylanderCardBack2}`
+        const dark = `${skylanderCardBack2}`
         const content3 = `Naam: ${skylanderName}\nKaart: ${skylanderCardFront}`
         const dark1 = `Eon: Sorry Poortmeester, maar er lijkt iets fout twe ziejn jn juew kwea-`
-        
 
-        if (cooldown.has(interaction.user.id)) {
+
+        if (cooldowns.has(interaction.user.id)) {
             const remainingCooldown = cooldownTime - (Date.now() - cooldownStartTime.get(interaction.user.id));
 
             const remainingCooldownSeconds = Math.max(0, Math.ceil(remainingCooldown / 1000));
@@ -72,10 +74,10 @@ module.exports = {
 
             if (skylanderRarity == "dark") {
 
-                cooldown.add(interaction.user.id);
+                cooldowns.add(interaction.user.id);
 
                 setTimeout(() => {
-                    cooldown.delete(interaction.user.id);
+                    cooldowns.delete(interaction.user.id);
                     cooldownStartTime.delete(interaction.user.id);
                 }, cooldownTime);
 
@@ -99,10 +101,10 @@ module.exports = {
 
             } else {
 
-                cooldown.add(interaction.user.id);
+                cooldowns.add(interaction.user.id);
 
                 setTimeout(() => {
-                    cooldown.delete(interaction.user.id);
+                    cooldowns.delete(interaction.user.id);
                     cooldownStartTime.delete(interaction.user.id);
                 }, cooldownTime);
 

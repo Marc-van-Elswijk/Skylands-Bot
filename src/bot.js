@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { token, databaseToken } = process.env;
+const { token, databaseToken: db } = process.env;
 const mongoose = require('mongoose');
 const mongoUri = process.env.databaseToken;
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
@@ -22,13 +22,14 @@ for (const folder of functionFolders) {
 client.handleEvents();
 client.handleCommands();
 client.handleComponents();
+
+mongoose.connect(db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  console.log("SkyBase is succesvol geconnect aan je bot");
+}).catch((err) => {
+  console.log(err);
+})
+
 client.login(token);
-(async () => {
-  try {
-    await mongoose.connect(process.env.databaseToken, { useUnifiedTopology: true });
-    console.log('Connected to the database');
-    // Your database-related code here
-  } catch (error) {
-    console.error('Error connecting to the database:', error);
-  }
-})();

@@ -1,4 +1,5 @@
 const { InteractionType } = require(`discord.js`);
+const profileModel = require("../../schemas/profileSchema");
 
 module.exports = {
     name: "interactionCreate",
@@ -7,6 +8,7 @@ module.exports = {
             const { commands } = client;
             const { commandName } = interaction;
             const command = commands.get(commandName);
+
             if (!command) return;
 
             try {
@@ -18,6 +20,6 @@ module.exports = {
                     ephemeral: true
                 });
             }
-        } 
+        }
     },
 };
