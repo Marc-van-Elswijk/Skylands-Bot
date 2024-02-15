@@ -11,8 +11,23 @@ module.exports = {
 
             if (!command) return;
 
+            let profileData;
             try {
-                command.execute(interaction, client);
+                profileData = await profileModel.findOne({ userId: interaction.user.id });
+
+                if (!profileData) {
+                    // Als het profiel niet bestaat, maak er een aan met standaardwaarden
+                    profileData = await profileModel.create({
+                        userId: interaction.user.id,
+                        SkyCoins: 10,  // Voeg SkyCoins toe met een standaardwaarde
+                    });
+                }
+            } catch (error) {
+                console.error(error);
+            }
+
+            try {
+                command.execute(interaction, client, profileData);
             } catch (error) {
                 console.error(error);
                 await interaction.reply({

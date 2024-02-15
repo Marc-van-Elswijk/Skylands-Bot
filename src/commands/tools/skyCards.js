@@ -27,17 +27,18 @@ module.exports = {
         const skylanderCardBack = skylander["cardback"]
         const skylanderCardBack2 = "https://cdn.discordapp.com/attachments/1205284717705039962/1205885050827182090/Dark_Card.jpg"
         const skylanderCardFront = skylander["cardfront"]
-        const skylanderValue = skylander["value"]
+        //const skylanderValue = skylander["value"]
 
         const SkyCard = new EmbedBuilder()
             .setTitle(`${skylanderName}`)
             .setDescription(`${skylanderQuote}`)
             .setImage(`${skylanderCardFront}`)
+            .setColor(`Blurple`)
             .addFields(
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Rarity:', value: `${skylanderRarity}`, inline: true },
                 { name: 'Game:', value: `${skylanderGame}`, inline: true },
-                { name: 'Value:', value: `${skylanderValue}`, inline: true }
+                //{ name: 'Value:', value: `${skylanderValue}`, inline: true }
             )
             .setTimestamp()
             .setFooter({
@@ -90,12 +91,19 @@ module.exports = {
                 await wait(4_000)
 
                 await interaction.editReply({
+                    content: 'Kaos: Waahaahahaha. Dacht je nu echt dat jullie zo snel van mij af waren! Ik heb nog zoveel meer achter de hand. Aanschouw!!'
+                });
+
+                await wait(4_000)
+
+                await interaction.editReply({
                     content: dark
                 });
 
                 await wait(3_00)
 
                 await interaction.editReply({
+                    content: 'Jouw Kaart is:',
                     embeds: [SkyCard]
                 });
 
@@ -111,6 +119,7 @@ module.exports = {
                 await wait(1_500);
 
                 await interaction.editReply({
+                    content: 'Jouw kaart is:',
                     embeds: [SkyCard]
                 })
             }
