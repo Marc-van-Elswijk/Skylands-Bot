@@ -18,7 +18,8 @@ module.exports = {
 
         if (!skylander) {
             return interaction.editReply(`Eon: De opgegeven Skylander met de naam "${skylandername}" ken ik niet. Misschien ben je iets vergeten toe te voegen?`);
-        }
+        } 
+        
 
         const newMessage = skylander;
         const skylanderName = skylander["name"]
