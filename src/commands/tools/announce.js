@@ -6,7 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("omroep")
         .setDescription("laat Eon iets omroepen")
-        .addStringOption(option => 
+        .addStringOption(option =>
             option.setName('tekst')
                 .setDescription('Voer hier de omroep in')
                 .setRequired(true)),
@@ -23,14 +23,14 @@ module.exports = {
         // Mention the @announcements role in the description
         const announceEmbed = {
             embeds: [{
-                title: "Nieuwe oproep van Eon!",
+                title: "New announcement of Eon!",
                 description: `${text}\n\n@announcements`, // Include role mention
                 color: resolvedColor,
             }],
         };
 
         const announceChannel = interaction.guild.channels.cache.find(channel => channel.name === "announcements");
-        if (!announceChannel) return interaction.reply(`Kanaal bestaat niet of kan het niet vinden`);
+        if (!announceChannel) return interaction.reply(`Eon cant find `);
 
         announceChannel.send(announceEmbed);
     }

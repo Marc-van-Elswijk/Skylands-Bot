@@ -38,7 +38,7 @@ module.exports = {
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Rarity:', value: `${skylanderRarity}`, inline: true },
                 { name: 'Game:', value: `${skylanderGame}`, inline: true },
-                //{ name: 'Value:', value: `${skylanderValue}`, inline: true }
+                //{ name: 'Value:', value: `${skylanderValue} skycoins`, inline: true }
             )
             .setTimestamp()
             .setFooter({
@@ -91,7 +91,7 @@ module.exports = {
                 await wait(4_000)
 
                 await interaction.editReply({
-                    content: 'Kaos: Waahaahahaha. Dacht je nu echt dat jullie zo snel van mij af waren! Ik heb nog zoveel meer achter de hand. Aanschouw!!'
+                    content: 'Kaos: Waahaahahaha. Did you really think I was gone for good?!'
                 });
 
                 await wait(4_000)
@@ -103,7 +103,7 @@ module.exports = {
                 await wait(3_00)
 
                 await interaction.editReply({
-                    content: 'Jouw Kaart is:',
+                    content: 'Your card is:',
                     embeds: [SkyCard]
                 });
 
@@ -119,7 +119,7 @@ module.exports = {
                 await wait(1_500);
 
                 await interaction.editReply({
-                    content: 'Jouw kaart is:',
+                    content: 'Your card is::',
                     embeds: [SkyCard]
                 })
             }
