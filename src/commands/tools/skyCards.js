@@ -16,29 +16,69 @@ module.exports = {
         .setName('skycard')
         .setDescription('Geeft je een random skylander kaart'),
     async execute(interaction, client) {
+        let userProfile = await profileModel.findOne({ userId: interaction.user.id });
         const skylander = await getSkyCardRandom();
         await interaction.deferReply({ fetchReply: true });
 
+        //nog geen user?
+        if (!profileModel) {
+            profileModel = new profileModel({
+                userId: interaction.user.id,
+                SkyCoins: 10,
+                dailyLastUsed: 0,
+                cardLastUsed: 0,
+                cardInventory: [], // Initieer de inventaris als lege array
+            });
+        }
+
+        //card info
         const newMessage = skylander;
         const skylanderName = skylander["name"]
         const skylanderQuote = skylander["quote"]
         const skylanderRarity = skylander["rarity"]
+        const skylanderElement = skylander["element"]
         const skylanderGame = skylander["game"]
         const skylanderCardBack = skylander["cardback"]
         const skylanderCardBack2 = "https://cdn.discordapp.com/attachments/1205284717705039962/1205885050827182090/Dark_Card.jpg"
         const skylanderCardFront = skylander["cardfront"]
-        //const skylanderValue = skylander["value"]
+        const skylanderValue = skylander["value"]
 
+        //color for the embeds
+        function colorEmbed(skylanderElement) {
+            switch (skylanderElement.toLowerCase()) {
+                case 'fire':
+                    return '#FF0000'; // Red
+                case 'earth':
+                    return '#8B4513'; // Brown
+                case 'undead':
+                    return '#808080'; // Grey
+                case 'air':
+                    return '#ADD8E6'; // Light Blue
+                case 'life':
+                    return '#00FF00'; // Green
+                case 'magic':
+                    return '#800080'; // Purple
+                case 'tech':
+                    return '#FFA500'; // Orange
+                case 'water':
+                    return '#00008B'; // Dark Blue
+
+                default:
+                    return '#7289DA'; // Blurple as default
+            }
+        }
+
+        //embed for the cards
         const SkyCard = new EmbedBuilder()
             .setTitle(`${skylanderName}`)
             .setDescription(`${skylanderQuote}`)
             .setImage(`${skylanderCardFront}`)
-            .setColor(`Blurple`)
+            .setColor(colorEmbed(skylanderElement))
             .addFields(
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Rarity:', value: `${skylanderRarity}`, inline: true },
                 { name: 'Game:', value: `${skylanderGame}`, inline: true },
-                //{ name: 'Value:', value: `${skylanderValue} skycoins`, inline: true }
+                { name: 'Value:', value: `${skylanderValue} skycoins`, inline: true }
             )
             .setTimestamp()
             .setFooter({
@@ -46,11 +86,30 @@ module.exports = {
                 icon: client.user.displayAvatarURL()
             });
 
-        const content = `Poortmeester ${interaction.user} heeft een kaart getrokken. Spannend!`;
-        const content2 = `Achterkant: ${skylanderCardBack}`;
+        //push card in inventory player
+        const drawnCard = {
+            name: skylanderName,
+            rarity: skylanderRarity,
+            value: skylanderValue, // Voeg dit toe als je de waarde ook wilt opslaan
+        };
+
+        if (userProfile.cardInventory[drawnCard.name]) {
+            // Als de kaart al in de inventaris staat, verhoog het aantal
+            userProfile.cardInventory[drawnCard.name].count++;
+        } else {
+            // Als de kaart nog niet in de inventaris staat, voeg deze toe
+            userProfile.cardInventory[drawnCard.name] = {
+                card: drawnCard,
+                count: 1,
+            };
+        }
+        await userProfile.save();
+
+
+        //content
+        const content = `Portalmaster ${interaction.user} has drawn a card`;
+        const content2 = `Back of the card: ${skylanderCardBack}`;
         const dark = `${skylanderCardBack2}`
-        const content3 = `Naam: ${skylanderName}\nKaart: ${skylanderCardFront}`
-        const dark1 = `Eon: Sorry Poortmeester, maar er lijkt iets fout twe ziejn jn juew kwea-`
 
 
         if (cooldowns.has(interaction.user.id)) {
@@ -85,28 +144,48 @@ module.exports = {
                 await wait(1_500);
 
                 await interaction.editReply({
-                    content: dark1
+                    content: `Eon: Sorry Portalmaster, but somethwing wrnt wran. w..h yoer daw-`
                 });
 
                 await wait(4_000)
 
                 await interaction.editReply({
-                    content: 'Kaos: Waahaahahaha. Did you really think I was gone for good?!'
+                    content: 'Kaos: Waahaahahaha. Did you really think I was gone for good?! I have more power than you think!'
                 });
 
                 await wait(4_000)
 
-                await interaction.editReply({
-                    content: dark
-                });
+                if (skylanderName == "Dark Spyro (S1)" || skylanderName == "Dark Spyro (S3)") {
 
-                await wait(3_00)
+                    await interaction.editReply({
+                        content: 'Spyro: Not so far Kaos!'
+                    });
 
-                await interaction.editReply({
-                    content: 'Your card is:',
-                    embeds: [SkyCard]
-                });
+                    await wait(4_000)
 
+                    await interaction.editReply({
+                        content: 'Kaos: Look at that. The almighty Spyro. You think you really think you can stop me?! Behoooold!!'
+                    });
+
+                    await wait(4_000)
+
+                    await interaction.editReply({
+                        content: '*Koas fires black lightning at Spyro and as soon as spyro got hit he turns into Dark Spyro*'
+                    });
+
+                    await wait(4_000)
+
+                    await interaction.editReply({
+                        content: dark
+                    });
+
+                    await wait(3_00)
+
+                    await interaction.editReply({
+                        content: 'Your card is:',
+                        embeds: [SkyCard]
+                    });
+                }
             } else {
 
                 cooldowns.add(interaction.user.id);
