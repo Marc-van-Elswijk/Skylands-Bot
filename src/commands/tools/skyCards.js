@@ -93,17 +93,20 @@ module.exports = {
             value: skylanderValue, // Voeg dit toe als je de waarde ook wilt opslaan
         };
 
-        if (userProfile.cardInventory[drawnCard.name]) {
+        const existingCard = userProfile.cardInventory.find(card => card.name === drawnCard.name);
+
+        if (existingCard) {
             // Als de kaart al in de inventaris staat, verhoog het aantal
-            userProfile.cardInventory[drawnCard.name].count++;
+            existingCard.count++;
         } else {
             // Als de kaart nog niet in de inventaris staat, voeg deze toe
-            userProfile.cardInventory[drawnCard.name] = {
-                card: drawnCard,
+            userProfile.cardInventory.push({
+                ...drawnCard,
                 count: 1,
-            };
+            });
         }
         await userProfile.save();
+        console.log('Gebruikersprofiel bijgewerkt:', userProfile);
 
 
         //content
@@ -164,7 +167,7 @@ module.exports = {
                     await wait(4_000)
 
                     await interaction.editReply({
-                        content: 'Kaos: Look at that. The almighty Spyro. You think you really think you can stop me?! Behoooold!!'
+                        content: 'Kaos: ook at that. The almighty Spyro. You think you really think you can stop me?! **Behoooold!!**'
                     });
 
                     await wait(4_000)
@@ -179,10 +182,10 @@ module.exports = {
                         content: dark
                     });
 
-                    await wait(3_00)
+                    await wait(5_00)
 
                     await interaction.editReply({
-                        content: 'Your card is:',
+                        content: 'Kaos: Your card is:',
                         embeds: [SkyCard]
                     });
                 }
@@ -198,7 +201,7 @@ module.exports = {
                 await wait(1_500);
 
                 await interaction.editReply({
-                    content: 'Your card is::',
+                    content: 'Eon: Your card is:',
                     embeds: [SkyCard]
                 })
             }
