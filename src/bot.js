@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const mongoUri = process.env.databaseToken;
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
-const cooldown = new Map();
 
 const client = new Client({ intents: GatewayIntentBits.Guilds });
 client.commands = new Collection();

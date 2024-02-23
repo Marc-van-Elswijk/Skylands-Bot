@@ -3,6 +3,6 @@ module.exports = {
     once: true,
     async execute(client) {
         setInterval(client.pickPresence, 900 * 1000);
-        console.log(`${client.user.tag} has logged into Discord!`);
+        console.log(`Eon is online as portalmaster: ${client.user.tag}!`);
     }
 }

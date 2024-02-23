@@ -106,7 +106,6 @@ module.exports = {
             });
         }
         await userProfile.save();
-        console.log('Gebruikersprofiel bijgewerkt:', userProfile);
 
 
         //content
@@ -120,7 +119,7 @@ module.exports = {
 
             const remainingCooldownSeconds = Math.max(0, Math.ceil(remainingCooldown / 1000));
 
-            interaction.editReply(`Eon: U gaat veelste snel Poortmeester. Ik ga nog even mijn baard fixen en dan ben ik zo bij u terug!\n\nJe kan weer een kaart aan Eon vragen over: ${remainingCooldownSeconds} seconde`)
+            interaction.editReply(`Eon: You are too fast portalmaster. I'm gonna fix my beard and then I'm gonna give you another card.\n :musical_score: when your beard is getting weird. beard spray, for men:notes: \n\nYou can ask for a new card in: ${remainingCooldownSeconds} seconde(s)`)
         } else {
 
             cooldownStartTime.set(interaction.user.id, Date.now());

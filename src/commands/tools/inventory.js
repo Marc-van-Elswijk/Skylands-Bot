@@ -1,7 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
 const profileModel = require("../../schemas/profileSchema");
 
-const cardsPerPage = 10;
+const cardsPerPage = 5;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -20,7 +20,19 @@ module.exports = {
 
         const inventoryEmbed = createInventoryEmbed(userProfile.cardInventory, page, interaction.user.username);
 
-        await interaction.reply({ embeds: [inventoryEmbed] });
+        const row = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setCustomId('prevButton')
+                    .setLabel('Previous')
+                    .setStyle('PRIMARY'),
+                new MessageButton()
+                    .setCustomId('nextButton')
+                    .setLabel('Next')
+                    .setStyle('PRIMARY'),
+            );
+
+        await interaction.reply({ embeds: [inventoryEmbed], components: [row] });
     },
 };
 
@@ -29,12 +41,12 @@ function createInventoryEmbed(cardInventory, currentPage, username) {
     const endIdx = startIdx + cardsPerPage;
     const currentCards = cardInventory.slice(startIdx, endIdx);
 
-    const inventoryEmbed = new EmbedBuilder()
+    const inventoryEmbed = new MessageEmbed()
         .setTitle(`${username}'s CardInventory - Page ${currentPage}`)
         .setColor('#3498db');
 
     currentCards.forEach((card) => {
-        const cardInfo = `Name: ${card.name} Rarity: ${card.rarity}\n Value: ${card.value} SkyCoins\n Amount: ${card.count}`;
+        const cardInfo = `Name: ${card.name}\n Rarity: ${card.rarity}\n Value: ${card.value} SkyCoins\n Amount: ${card.count}`;
         inventoryEmbed.addFields({ name: '\u200B', value: cardInfo });
     });
 
