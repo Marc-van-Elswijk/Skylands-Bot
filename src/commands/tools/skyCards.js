@@ -157,36 +157,122 @@ module.exports = {
 
                 await wait(4_000)
 
-                if (skylanderName == "Dark Spyro (S1)" || skylanderName == "Dark Spyro (S3)") {
+                switch (skylanderName) {
+                    case "Dark Spyro (S1)" || skylanderName == "Dark Spyro (S3)":
+                        await interaction.editReply({
+                            content: 'Spyro: Not so far Kaos!'
+                        });
 
-                    await interaction.editReply({
-                        content: 'Spyro: Not so far Kaos!'
-                    });
+                        await wait(4_000)
 
-                    await wait(4_000)
+                        await interaction.editReply({
+                            content: 'Kaos: Look at that. The almighty Spyro. You think you really think you can stop me?! **Behoooold!!**'
+                        });
 
-                    await interaction.editReply({
-                        content: 'Kaos: ook at that. The almighty Spyro. You think you really think you can stop me?! **Behoooold!!**'
-                    });
+                        await wait(4_000)
 
-                    await wait(4_000)
+                        await interaction.editReply({
+                            content: '*Koas fires black lightning at Spyro and as soon as spyro got hit he turns into Dark Spyro*'
+                        });
 
-                    await interaction.editReply({
-                        content: '*Koas fires black lightning at Spyro and as soon as spyro got hit he turns into Dark Spyro*'
-                    });
+                        await wait(4_000)
 
-                    await wait(4_000)
+                        await interaction.editReply({
+                            content: dark
+                        });
 
-                    await interaction.editReply({
-                        content: dark
-                    });
+                        await wait(5_00)
 
-                    await wait(5_00)
+                        await interaction.editReply({
+                            content: 'Kaos: Your card is:',
+                            embeds: [SkyCard]
+                        });
 
-                    await interaction.editReply({
-                        content: 'Kaos: Your card is:',
-                        embeds: [SkyCard]
-                    });
+                    case "Dark Zone":
+                        await interaction.editReply({
+                            content: 'BlastZone: Not so far Kaos!'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Kaos: Look at that. A wild BlastZone. You are a SwapForce which means you have 2 parts! **Behoooold!!**'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: '*Koas fires black lightning at BlastZone and as soon as he got hit he turns into Dark BlastZone*'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Glumshanks: uhm master. It looks like he is still himself'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Kaos: I wasnt done Glumshanks! *Rips BlastZone apart and let Blast dissapears*'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: dark
+                        });
+
+                        await wait(5_00)
+
+                        await interaction.editReply({
+                            content: 'Kaos: Your card is:',
+                            embeds: [SkyCard]
+                        });
+
+                    case "Dark Blast":
+                        await interaction.editReply({
+                            content: 'BlastZone: Not so far Kaos!'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Kaos: Look at that. A wild BlastZone. A SwapForce which means you have 2 parts! **Behoooold!!**'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: '*Koas fires black lightning at BlastZone and as soon as he got hit he turns into Dark BlastZone*'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Glumshanks: uhm master. It looks like he is still himself'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Kaos: I wasnt done Glumshanks! *Rips BlastZone apart and let Zone dissapears*'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: dark
+                        });
+
+                        await wait(5_00)
+
+                        await interaction.editReply({
+                            content: 'Kaos: Your card is:',
+                            embeds: [SkyCard]
+                        });
+
+                    
                 }
             } else {
 

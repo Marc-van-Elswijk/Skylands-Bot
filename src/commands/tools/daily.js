@@ -10,6 +10,7 @@ module.exports = {
     async execute(interaction, client, profileData) {
         const { id } = interaction.user;
         const { dailyLastUsed } = profileData;
+        await interaction.deferReply({fetchReply: true});
 
         const cooldown = 86400000;
         const timeLeft = cooldown - (Date.now() - dailyLastUsed);
@@ -20,8 +21,6 @@ module.exports = {
             await interaction.editReply(`Claim your next daily in ${hours} uur, ${minutes} minuten en ${seconds} secondes`
             );
         }
-
-        await interaction.deferReply();
 
         const randomAmt = Math.floor(Math.random() * (dailyMax - dailyMin + 1) + dailyMin);
 
