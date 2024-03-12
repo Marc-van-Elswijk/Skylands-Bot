@@ -18,12 +18,17 @@ module.exports = {
     async execute(interaction, client) {
         let userProfile = await profileModel.findOne({ userId: interaction.user.id });
         const skylander = await getSkyCardRandom();
-        await interaction.deferReply({ fetchReply: true });
+        const skymessage = await interaction.deferReply({ fetchReply: true });
+        
+        if (!skymessage || !skymessage.id) {
+            return console.error('Failed to retrieve the deferred message ID.');
+        }
 
         //nog geen user?
         if (!profileModel) {
             profileModel = new profileModel({
                 userId: interaction.user.id,
+                name: interaction.user.username,
                 SkyCoins: 10,
                 dailyLastUsed: 0,
                 cardLastUsed: 0,
@@ -42,6 +47,9 @@ module.exports = {
         const skylanderCardBack2 = "https://cdn.discordapp.com/attachments/1205284717705039962/1205885050827182090/Dark_Card.jpg"
         const skylanderCardFront = skylander["cardfront"]
         const skylanderValue = skylander["value"]
+        const skylanderHealth = skylander["health"]
+        const skylanderStrength = skylander["strength stat"]
+        const skylanderDefense = skylander["defense stat"]
 
         //color for the embeds
         function colorEmbed(skylanderElement) {
@@ -89,22 +97,26 @@ module.exports = {
         //push card in inventory player
         const drawnCard = {
             name: skylanderName,
+            photo: skylanderCardFront,
+            element: skylanderElement,
             rarity: skylanderRarity,
-            value: skylanderValue, // Voeg dit toe als je de waarde ook wilt opslaan
+            value: skylanderValue,
+            health: skylanderHealth,
+            strength: skylanderStrength,
+            defense: skylanderDefense
         };
 
         const existingCard = userProfile.cardInventory.find(card => card.name === drawnCard.name);
 
         if (existingCard) {
-            // Als de kaart al in de inventaris staat, verhoog het aantal
             existingCard.count++;
         } else {
-            // Als de kaart nog niet in de inventaris staat, voeg deze toe
             userProfile.cardInventory.push({
                 ...drawnCard,
                 count: 1,
             });
         }
+
         await userProfile.save();
 
 
@@ -124,6 +136,13 @@ module.exports = {
 
             cooldownStartTime.set(interaction.user.id, Date.now());
 
+            cooldowns.add(interaction.user.id);
+
+            setTimeout(() => {
+                cooldowns.delete(interaction.user.id);
+                cooldownStartTime.delete(interaction.user.id);
+            }, cooldownTime);
+
             await interaction.editReply({
                 content: content
             });
@@ -134,14 +153,35 @@ module.exports = {
                 content: content2
             });
 
+            if (skylanderName == "Lokale Turk") {
+                await wait(1_500);
+
+                await interaction.editReply({
+                    content: `Eon: een secondje hoor jongens. Van al dat kaarten uitdelen krijg ik trek zeg`
+                });
+
+                await wait(4_000)
+
+                await interaction.editReply({
+                    content: `Eruptor: ja maar ik heb net heel die koelkast opgegeten Eon. Kwam er effe wat eerder mee jij jood`
+                });
+
+                await wait(4_000);
+
+                await interaction.editReply({
+                    content: `Eon: ach hou je kop vuile nazi. we bestellen wat bij de plaatselijke turk`
+                });
+
+                await wait(5_00)
+
+                        await interaction.editReply({
+                            content: 'Eon: Your card is:',
+                            embeds: [SkyCard]
+                        });
+
+            }
+
             if (skylanderRarity == "dark") {
-
-                cooldowns.add(interaction.user.id);
-
-                setTimeout(() => {
-                    cooldowns.delete(interaction.user.id);
-                    cooldownStartTime.delete(interaction.user.id);
-                }, cooldownTime);
 
                 await wait(1_500);
 
@@ -276,20 +316,13 @@ module.exports = {
                 }
             } else {
 
-                cooldowns.add(interaction.user.id);
-
-                setTimeout(() => {
-                    cooldowns.delete(interaction.user.id);
-                    cooldownStartTime.delete(interaction.user.id);
-                }, cooldownTime);
-
                 await wait(1_500);
 
                 await interaction.editReply({
                     content: 'Eon: Your card is:',
                     embeds: [SkyCard]
                 })
-            }
+            }    
         }
     }
 }

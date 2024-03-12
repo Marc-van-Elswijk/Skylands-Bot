@@ -19,7 +19,9 @@ module.exports = {
                     // Als het profiel niet bestaat, maak er een aan met standaardwaarden
                     profileData = await profileModel.create({
                         userId: interaction.user.id,
-                        SkyCoins: 10,  // Voeg SkyCoins toe met een standaardwaarde
+                        name: interaction.user.username,
+                        SkyCoins: 10,
+                        cardInventory: []
                     });
                 }
             } catch (error) {

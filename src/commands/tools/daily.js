@@ -10,36 +10,46 @@ module.exports = {
     async execute(interaction, client, profileData) {
         const { id } = interaction.user;
         const { dailyLastUsed } = profileData;
-        await interaction.deferReply({fetchReply: true});
-
-        const cooldown = 86400000;
-        const timeLeft = cooldown - (Date.now() - dailyLastUsed);
-
-        if (timeLeft > 0) {
-            await interaction.deferReply({ ephemeral: true });
-            const { hours, minutes, seconds } = parseMilliseconds(timeLeft);
-            await interaction.editReply(`Claim your next daily in ${hours} uur, ${minutes} minuten en ${seconds} secondes`
-            );
-        }
-
-        const randomAmt = Math.floor(Math.random() * (dailyMax - dailyMin + 1) + dailyMin);
 
         try {
+            // Controleer of de interactie al is uitgesteld of beantwoord
+            if (interaction.deferred || interaction.replied) {
+                return;
+            }
+
+            // Probeer de interactie uit te stellen
+            await interaction.deferReply({ fetchReply: true });
+            
+            const cooldown = 86400000; // 24 uur cooldown in milliseconden
+            const timeLeft = cooldown - (Date.now() - dailyLastUsed);
+
+            if (timeLeft > 0) {
+                // Als er nog tijd over is, bewerk het uitgestelde bericht met de resterende tijd
+                const { hours, minutes, seconds } = parseMilliseconds(timeLeft);
+                return await interaction.editReply(`Claim your next daily in ${hours} uur, ${minutes} minuten en ${seconds} secondes`);
+            }
+
+            // Voer de logica uit om dagelijkse beloningen te geven
+            const randomAmt = Math.floor(Math.random() * (dailyMax - dailyMin + 1) + dailyMin);
+
             await profileModel.findOneAndUpdate(
                 { userId: id },
                 {
                     $set: {
                         dailyLastUsed: Date.now(),
+                        name: interaction.user.username
                     },
                     $inc: {
                         SkyCoins: randomAmt,
                     }
                 }
-            )
-        } catch (error) {
-            console.log(error);
-        }
+            );
 
-        await interaction.editReply(`Eon: Je dagelijkse beloning is/zijn: ${randomAmt} SkycoinS. Over 24 uur kan je nog meer komen ophalen`);
+            // Bewerk het uitgestelde bericht met de dagelijkse beloning
+            await interaction.editReply(`Eon: Here are your daily coins of: ${randomAmt} SkyCoins. Come back in 24 hours to claim some more`);
+        } catch (error) {
+            console.error('Error processing daily command:', error);
+            await interaction.followUp('An error occurred while processing your daily reward.');
+        }
     },
 };
