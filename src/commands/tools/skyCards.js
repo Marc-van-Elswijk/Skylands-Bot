@@ -19,7 +19,7 @@ module.exports = {
         let userProfile = await profileModel.findOne({ userId: interaction.user.id });
         const skylander = await getSkyCardRandom();
         const skymessage = await interaction.deferReply({ fetchReply: true });
-        
+
         if (!skymessage || !skymessage.id) {
             return console.error('Failed to retrieve the deferred message ID.');
         }
@@ -86,7 +86,10 @@ module.exports = {
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Rarity:', value: `${skylanderRarity}`, inline: true },
                 { name: 'Game:', value: `${skylanderGame}`, inline: true },
-                { name: 'Value:', value: `${skylanderValue} skycoins`, inline: true }
+                { name: 'Value:', value: `${skylanderValue} skycoins`, inline: true },
+                { name: 'Health:', value: `${skylanderHealth}`, inline: true },
+                { name: 'Strength:', value: `${skylanderStrength}`, inline: true },
+                { name: 'Defense:', value: `${skylanderDefense}`, inline: true }
             )
             .setTimestamp()
             .setFooter({
@@ -174,10 +177,10 @@ module.exports = {
 
                 await wait(5_00)
 
-                        await interaction.editReply({
-                            content: 'Eon: Your card is:',
-                            embeds: [SkyCard]
-                        });
+                await interaction.editReply({
+                    content: 'Eon: Your card is:',
+                    embeds: [SkyCard]
+                });
 
             }
 
@@ -198,6 +201,9 @@ module.exports = {
                 await wait(4_000)
 
                 switch (skylanderName) {
+
+                    //dark Spyro
+
                     case "Dark Spyro (S1)" || skylanderName == "Dark Spyro (S3)":
                         await interaction.editReply({
                             content: 'Spyro: Not so far Kaos!'
@@ -227,6 +233,8 @@ module.exports = {
                             content: 'Kaos: Your card is:',
                             embeds: [SkyCard]
                         });
+
+                    //dark BlastZone
 
                     case "Dark Zone":
                         await interaction.editReply({
@@ -299,10 +307,42 @@ module.exports = {
                             content: 'Kaos: I wasnt done Glumshanks! *Rips BlastZone apart and let Zone dissapears*'
                         });
 
+                        await wait(5_00)
+
+                        await interaction.editReply({
+                            content: 'Kaos: Your card is:',
+                            embeds: [SkyCard]
+                        });
+
+                    //dark Wash Buckler
+
+                    case "Dark Wash":
+                        await interaction.editReply({
+                            content: 'Wash Buckler: Not so far Kaos!'
+                        });
+
                         await wait(4_000)
 
                         await interaction.editReply({
-                            content: dark
+                            content: 'Kaos: Look at that. A fishy Wash Buckler. A SwapForce which means you have 2 parts! **Behoooold!!**'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: '*Koas fires black lightning at Wash Buckler and as soon as he got hit he turns into Dark Wash Buckler*'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Glumshanks: uhm master. It looks like he is still himself'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Kaos: I wasnt done Glumshanks! behoooooooooooold! *Rips Wash Buckler apart and let Buckler dissapears*'
                         });
 
                         await wait(5_00)
@@ -312,7 +352,68 @@ module.exports = {
                             embeds: [SkyCard]
                         });
 
-                    
+                    case "Dark Buckler":
+                        await interaction.editReply({
+                            content: 'Wash Buckler: Not so far Kaos!'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Kaos: Look at that. A fishy Wash Buckler. A SwapForce which means you have 2 parts! **Behoooold!!**'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: '*Koas fires black lightning at Wash Buckler and as soon as he got hit he turns into Dark Wash Buckler*'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Glumshanks: uhm master. It looks like he is still himself'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Kaos: I wasnt done Glumshanks! behoooooooooooold! *Rips Wash Buckler apart and let Wash dissapears*'
+                        });
+
+                        await wait(5_00)
+
+                        await interaction.editReply({
+                            content: 'Kaos: Your card is:',
+                            embeds: [SkyCard]
+                        });
+
+                    // dark slobber tooth
+                    case "Dark Slobber Tooth":
+                        await interaction.editReply({
+                            content: 'Slobber Tooth: Nah uh'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: 'Kaos: Look at that. Slobber Tooth. I think you look better in black! **Behoooold!!**'
+                        });
+
+                        await wait(4_000)
+
+                        await interaction.editReply({
+                            content: '*Koas fires black lightning at Slobber Tooth and as soon as Slobber Tooth got hit he turns into Dark Slobber Tooth*'
+                        });
+
+                        await wait(5_00)
+
+                        await interaction.editReply({
+                            content: 'Kaos: Your card is:',
+                            embeds: [SkyCard]
+                        });
+
+                    // dark ...
                 }
             } else {
 
@@ -322,7 +423,7 @@ module.exports = {
                     content: 'Eon: Your card is:',
                     embeds: [SkyCard]
                 })
-            }    
+            }
         }
     }
 }
