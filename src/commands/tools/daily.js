@@ -18,7 +18,7 @@ module.exports = {
             }
 
             // Probeer de interactie uit te stellen
-            await interaction.deferReply({ fetchReply: true });
+            await interaction.deferReply({ ephemeral: true, fetchReply: true });
             
             const cooldown = 86400000; // 24 uur cooldown in milliseconden
             const timeLeft = cooldown - (Date.now() - dailyLastUsed);
