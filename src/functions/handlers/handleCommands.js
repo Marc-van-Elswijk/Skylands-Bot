@@ -13,7 +13,7 @@ module.exports = (client) => {
             for (const file of commandFiles) {
                 const command = require(`../../commands/${folder}/${file}`);
                 commands.set(command.data.name, command);
-                commandArray.push(command.data.toJSON());
+                commandArray.push(command.data);
                 console.log(`Command: ${command.data.name} has passed through the handler`);
             }
         }
@@ -23,8 +23,8 @@ module.exports = (client) => {
             console.log('Started refreshing application (/) commands.');
 
             await rest.put(
-                Routes.applicationCommands( process.env.clientId ),
-                { body: client.commandArray, }
+                Routes.applicationCommands(process.env.clientId),
+                { body: client.commandArray }
             );
 
             console.log('Succesfully reloaded application (/) commands.');

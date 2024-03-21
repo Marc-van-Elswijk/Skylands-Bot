@@ -30,7 +30,7 @@ module.exports = {
             }
 
             // Voer de logica uit om dagelijkse beloningen te geven
-            const randomAmt = Math.floor(Math.random() * (dailyMax - dailyMin + 1) + dailyMin);
+            const randomAmt = Math.floor(Math.random() * (dailyMax - dailyMin + 10) + dailyMin);
 
             await profileModel.findOneAndUpdate(
                 { userId: id },

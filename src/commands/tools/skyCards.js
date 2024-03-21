@@ -150,38 +150,121 @@ module.exports = {
                 content: content
             });
 
-            await wait(3_500);
+            await wait(4000);
+
+            if (!existingCard) {
+                await interaction.editReply({
+                    content: `Eon: Look at that Portalmaster. A new card for your Skylander Collection!`
+                });
+
+                await wait(4000);
+            }
 
             await interaction.editReply({
                 content: content2
             });
 
-            if (skylanderName == "Lokale Turk") {
-                await wait(1_500);
+            if (skylanderRarity == "tcr") {
+                await wait(2500);
+
+                if (skylanderName == "Lokale Jood") {
+                    await interaction.editReply({
+                        content: `Marc: Laat deze maar over aan mij Eon`
+                    });
+
+                    await wait(2500);
+
+                    await interaction.editReply({
+                        content: `Eon: oh dat zou ik zeer fijn vinden ja. Ik word moe van die kaartjes maken`
+                    });
+
+                    await wait(5000);
+
+                    await interaction.editReply({
+                        content: `Marc: Dat dacht ik al. Laat mij maar even`
+                    });
+
+                    await wait(2500);
+
+                    await interaction.editReply({
+                        content: `Eon: Dankjewel *loopt weg*`
+                    });
+
+                    await wait(2500);
+
+                    await interaction.editReply({
+                        content: `Marc: Had dit nou maar niet gedaan >:)`
+                    });
+
+                    await wait (2500)
+
+                    await interaction.editReply({
+                        content: 'Marc: Jouw kaart is nu:',
+                        embeds: [SkyCard]
+                    });
+                }
 
                 await interaction.editReply({
                     content: `Eon: een secondje hoor jongens. Van al dat kaarten uitdelen krijg ik trek zeg`
                 });
 
-                await wait(4_000)
+                await wait(4000)
 
-                await interaction.editReply({
-                    content: `Eruptor: ja maar ik heb net heel die koelkast opgegeten Eon. Kwam er effe wat eerder mee jij jood`
-                });
+                switch (skylanderName) {
+                    case "Lokale Turk":
 
-                await wait(4_000);
+                        await interaction.editReply({
+                            content: `Eruptor: ja maar ik heb net heel die koelkast opgegeten Eon. Kwam er effe wat eerder mee jij jood`
+                        });
+        
+                        await wait(4000);
+        
+                        await interaction.editReply({
+                            content: `Eon: ach hou je kop vuile nazi. we bestellen wat bij de plaatselijke turk`
+                        });
+        
+                        await wait(5000)
+        
+                        await interaction.editReply({
+                            content: 'Eon: Your card is:',
+                            embeds: [SkyCard]
+                        });
 
-                await interaction.editReply({
-                    content: `Eon: ach hou je kop vuile nazi. we bestellen wat bij de plaatselijke turk`
-                });
+                        break;
 
-                await wait(5_00)
+                    case "Lokale Kut Chinees":
 
-                await interaction.editReply({
-                    content: 'Eon: Your card is:',
-                    embeds: [SkyCard]
-                });
+                        await interaction.editReply({
+                            content: `Stealth Elf: Eon kom op zeg! Dit meent u toch niet?!`
+                        });
 
+                        await wait(3500);
+
+                        await interaction.editReply({
+                            content: `Eon: Jij snapt gewoon niet hoe hard mijn baan is Stealth Elf. Ik moet regeren over Skylanders, Zorgen dat Kaos niet aanvalt, zorgen dat mijn baard goed zit en kaartjes uitdelen. Ik verdien eten`
+                        });
+
+                        await wait(5500);
+
+                        await interaction.editReply({
+                            content: `Stealth Elf: Bestel dan iets bij de chinees ofzo. Heb ik wel trek in eigenlijk`
+                        });
+
+                        await wait(3500);
+
+                        await interaction.editReply({
+                            content: `Eon: Bij die kut chinees? De laatste keer 3 uur van op de wc gezeten ja!.. maar sinds ik honger heb en je het zo aandringt is het geen slecht idee`
+                        });
+
+                        await wait(5500);
+
+                        await interaction.editReply({
+                            content: 'Eon: Your card is:',
+                            embeds: [SkyCard]
+                        });
+
+                        break;
+                }
             }
 
             if (skylanderRarity == "dark") {
@@ -234,6 +317,8 @@ module.exports = {
                             embeds: [SkyCard]
                         });
 
+                        break;
+
                     //dark BlastZone
 
                     case "Dark Zone":
@@ -278,6 +363,8 @@ module.exports = {
                             embeds: [SkyCard]
                         });
 
+                        break;
+
                     case "Dark Blast":
                         await interaction.editReply({
                             content: 'BlastZone: Not so far Kaos!'
@@ -313,6 +400,8 @@ module.exports = {
                             content: 'Kaos: Your card is:',
                             embeds: [SkyCard]
                         });
+
+                        break;
 
                     //dark Wash Buckler
 
@@ -352,6 +441,8 @@ module.exports = {
                             embeds: [SkyCard]
                         });
 
+                        break;
+
                     case "Dark Buckler":
                         await interaction.editReply({
                             content: 'Wash Buckler: Not so far Kaos!'
@@ -388,6 +479,8 @@ module.exports = {
                             embeds: [SkyCard]
                         });
 
+                        break;
+
                     // dark slobber tooth
                     case "Dark Slobber Tooth":
                         await interaction.editReply({
@@ -412,6 +505,8 @@ module.exports = {
                             content: 'Kaos: Your card is:',
                             embeds: [SkyCard]
                         });
+
+                        break;
 
                     // dark ...
                 }

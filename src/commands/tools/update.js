@@ -16,7 +16,7 @@ module.exports = {
             return console.error('Failed to retrieve the deferred message ID.');
         }
 
-        const newMessage = ``
+        const newMessage = `- /help\n- new SwapForce cards added to the bot`
         
         // Edit the interaction reply using the stored message ID
         await interaction.editReply({

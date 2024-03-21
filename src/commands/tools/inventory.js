@@ -36,7 +36,7 @@ module.exports = {
           .addFields(
             userData.cardInventory.slice(0, 10).map((card, index) => ({
               name: `${index + 1}. ${card.name}`,
-              value: `Value: ${String(card.value)} SkyCoins\nRarity: ${String(card.rarity)}\nHealth: ${String(card.health)}\nStrength: ${String(card.strength)}\nDefense: ${String(card.defense)}\nAmount: ${String(card.count)}`,
+              value: `Value: ${String(card.value)} SkyCoins\nRarity: ${String(card.rarity)}\nHealth: ${String(card.health)}\nStrength: ${String(card.strength)}\nDefense: ${String(card.defense)}\nAmount: ${String(card.count)}\nPhoto: ${String(card.photo)}`,
               inline: false,
             }))
           );
