@@ -36,8 +36,17 @@ module.exports = {
                     option.setName('amount')
                         .setDescription('Het aantal kaarten dat je wilt verkopen')
                         .setRequired(true)
-                )
-        ),
+                ))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('count')
+                .setDescription('Kijk hoeveel kaarten je hebt')
+                    .addStringOption(option =>
+                        option.setName('skylanderid')
+                            .setDescription('De skylanderId van de kaart die je wilt checken')
+                            .setRequired(true)
+                    )),
+
 
 
 
@@ -70,9 +79,7 @@ module.exports = {
         const skylanderQuote = skylander["quote"]
         const skylanderRarity = skylander["rarity"]
         const skylanderElement = skylander["element"]
-        const skylanderGame = skylander["game"]
         const skylanderCardBack = skylander["cardback"]
-        const skylanderCardBack2 = "https://cdn.discordapp.com/attachments/1205284717705039962/1205885050827182090/Dark_Card.jpg"
         const skylanderCardFront = skylander["cardfront"]
         const skylanderValue = skylander["value"]
         const skylanderHealth = skylander["health"]
@@ -126,6 +133,8 @@ module.exports = {
                 icon: client.user.displayAvatarURL()
             });
 
+
+
         if (subcommand === 'pull') {
 
             //push card in inventory player
@@ -146,9 +155,14 @@ module.exports = {
             if (existingCard) {
                 existingCard.count++;
                 const existingSkylanderId = existingCard.skylanderid;
+                const existingSkylanderPhoto = existingCard.photo;
                 if (existingSkylanderId !== skylanderId) {
                     existingCard.skylanderid = skylanderId;
                 }
+                //if (existingSkylanderPhoto) {
+                //existingCard.photo = skylanderdbphoto;
+                //console.log('Foto succesvol bijgewerkt.');
+                //}
             } else {
                 userProfile.cardInventory.push({
                     ...drawnCard,
@@ -158,11 +172,9 @@ module.exports = {
 
             await userProfile.save();
 
-
             //content
             const content = `Portalmaster ${interaction.user} has drawn a card`;
             const content2 = `Back of the card: ${skylanderCardBack}`;
-            const dark = `${skylanderCardBack2}`
 
 
             if (cooldowns.has(interaction.user.id)) {
@@ -171,6 +183,11 @@ module.exports = {
                 const remainingCooldownSeconds = Math.max(0, Math.ceil(remainingCooldown / 1000));
 
                 interaction.editReply(`Eon: You are too fast portalmaster. I'm gonna fix my beard and then I'm gonna give you another card.\n :musical_score: when your beard is getting weird. beard spray, for men:notes: \n\nYou can ask for a new card in: ${remainingCooldownSeconds} seconde(s)`)
+
+                await wait(3500)
+
+                await skymessage.delete();
+
             } else {
 
                 cooldownStartTime.set(interaction.user.id, Date.now());
@@ -204,6 +221,45 @@ module.exports = {
                     await wait(2500);
 
                     switch (skylanderName) {
+
+                        case "Lokale Jezus":
+
+                            await interaction.editReply({
+                                content: `Baron Erso: :musical_score:het was goede vrijdag in het jaar 33. Ik weet het nog zo goed. Jezus hing aan het kruis..:notes:`
+                            });
+
+                            await wait(6000);
+
+                            await interaction.editReply({
+                                content: `${interaction.user.username}: Zal wel niet jouw kruis geweest zijn, want die hangt een beetje te laag daarvoor`
+                            });
+
+                            await wait(6000);
+
+                            await interaction.editReply({
+                                content: `Baron Erso: *kuch kuch* :musical_score:En hij had de mensen zo goed gedaan. zoals hij dat elke dag wel deed:notes:`
+                            });
+
+                            await wait(6000);
+
+                            await interaction.editReply({
+                                content: `${interaction.user.username}: Ja dit wordt helemaal niks zo. Laat mijn kaart maar gewoon zien`
+                            });
+
+                            await wait(6000);
+
+                            await interaction.editReply({
+                                content: `Baron Erso: urgh. prima`
+                            });
+
+                            await wait(5000);
+
+                            await interaction.editReply({
+                                content: 'Baron Erso: Uw kaart is:',
+                                embeds: [SkyCard]
+                            });
+
+                            return;
 
                         case "Lokale Programmeur":
                             await interaction.editReply({
@@ -581,17 +637,11 @@ module.exports = {
                             await wait(4_000)
 
                             await interaction.editReply({
-                                content: dark
-                            });
-
-                            await wait(5_00)
-
-                            await interaction.editReply({
                                 content: 'Kaos: Your card is:',
                                 embeds: [SkyCard]
                             });
 
-                            break;
+                            return;
 
                         //dark BlastZone
 
@@ -627,17 +677,11 @@ module.exports = {
                             await wait(4_000)
 
                             await interaction.editReply({
-                                content: dark
-                            });
-
-                            await wait(5_00)
-
-                            await interaction.editReply({
                                 content: 'Kaos: Your card is:',
                                 embeds: [SkyCard]
                             });
 
-                            break;
+                            return;
 
                         case "Dark Blast":
                             await interaction.editReply({
@@ -675,7 +719,7 @@ module.exports = {
                                 embeds: [SkyCard]
                             });
 
-                            break;
+                            return;
 
                         //dark Wash Buckler
 
@@ -715,7 +759,7 @@ module.exports = {
                                 embeds: [SkyCard]
                             });
 
-                            break;
+                            return;
 
                         case "Dark Buckler":
                             await interaction.editReply({
@@ -753,7 +797,7 @@ module.exports = {
                                 embeds: [SkyCard]
                             });
 
-                            break;
+                            return;
 
                         // dark slobber tooth
                         case "Dark Slobber Tooth":
@@ -780,7 +824,7 @@ module.exports = {
                                 embeds: [SkyCard]
                             });
 
-                            break;
+                            return;
 
                         // dark Vulcanic Eruptor
                         case "Vulcanic Eruptor":
@@ -819,9 +863,9 @@ module.exports = {
                                 embeds: [SkyCard]
                             });
 
-                            break;
+                            return;
 
-                        //dark ...
+                        //dark Mega Ram Spyro
                         case "Dark Mega Ram Spyro":
                             await interaction.editReply({
                                 content: 'Spyro: Not so far Kaos!'
@@ -842,17 +886,36 @@ module.exports = {
                             await wait(4_000)
 
                             await interaction.editReply({
-                                content: dark
+                                content: 'Kaos: Your card is:',
+                                embeds: [SkyCard]
                             });
 
-                            await wait(5_00)
+                            return;
+
+                        //Dark Ninja Stealth Elf
+                        case "Dark Ninja Stealth Elf":
+                            await interaction.editReply({
+                                content: 'Ninja Stealth Elf: You not going anywhere Kaos!'
+                            });
+
+                            await wait(4_000)
+
+                            await interaction.editReply({
+                                content: 'Kaos: Look at that. Ninja Stealth Elf. You slayy in black girl. Lets go for a more dark tint shall we? **Behoooold!!**'
+                            });
+
+                            await wait(4_000)
+
+                            await interaction.editReply({
+                                content: '*Koas fires black lightning at Ninja Stealth Elf and as soon as Ninja Stealth Elf got hit he turns into Dark Ninja Stealth Elf*'
+                            });
+
+                            await wait(4_000)
 
                             await interaction.editReply({
                                 content: 'Kaos: Your card is:',
                                 embeds: [SkyCard]
                             });
-
-                            break;
                     }
                 } else {
 
@@ -869,16 +932,16 @@ module.exports = {
         if (subcommand === 'sell') {
             const targetSkylanderId = interaction.options.getString('skylanderid');
             const amount = interaction.options.getInteger('amount');
-        
+
             if (!targetSkylanderId) {
                 await interaction.editReply({
                     content: `Baron Erso: Please provide a valid skylanderId for the card you want to sell.`
                 });
                 return;
             }
-        
+
             console.log('Target Skylander ID:', targetSkylanderId);
-        
+
             // Zoek de kaart in de inventaris op basis van de skylanderId
             const existingCardIndex = userProfile.cardInventory.findIndex(card => {
                 if (card.skylanderid !== undefined && card.skylanderid !== null) {
@@ -887,7 +950,7 @@ module.exports = {
                 }
                 return false;
             });
-        
+
             // Controleer of de kaart is gevonden
             if (existingCardIndex === -1) {
                 await interaction.editReply({
@@ -895,12 +958,12 @@ module.exports = {
                 });
                 return;
             }
-        
+
             // Haal de gevonden kaart op
             const existingCard = userProfile.cardInventory[existingCardIndex];
             const cardValue = existingCard.value;
             const cardName = existingCard.name;
-        
+
             // Controleer of de speler voldoende kaarten heeft om te verkopen
             if (existingCard.count < amount) {
                 await interaction.editReply({
@@ -908,33 +971,72 @@ module.exports = {
                 });
                 return;
             }
-        
+
             // Bereken de totale waarde van de verkochte kaarten
             const totalValue = cardValue * amount;
-        
+
             // Voeg de totale waarde van de kaarten toe aan de SkyCoins van de gebruiker
             userProfile.SkyCoins += totalValue;
-        
+
             // Verwijder de kaarten uit de inventaris op basis van het opgegeven aantal
             if (existingCard.count === amount) {
                 userProfile.cardInventory.splice(existingCardIndex, 1);
             } else {
                 existingCard.count -= amount;
             }
-        
+
             // Opslaan van userProfile in de database
             await userProfile.save();
-        
+
             // Bevestig dat de kaart is verkocht en het geld is toegevoegd aan de SkyCoins
             await interaction.editReply({
-                content: `Marc: Thank you for selling ${amount} ${cardName} card(s). You receive ${totalValue} SkyCoins from me.`
+                content: `Baron Erso: Thank you for selling ${amount} ${cardName} card(s). You receive ${totalValue} SkyCoins from me. Next time don't sell too much please. ${amount} is more than enough`
             });
         }
-        
+
 
         if (subcommand === 'trade') {
             await interaction.editReply({
                 content: `Eon: Comming Soom`
+            })
+        }
+
+        if (subcommand === 'count') {
+
+            const targetSkylanderId = interaction.options.getString('skylanderid');
+
+            if (!targetSkylanderId) {
+                await interaction.editReply({
+                    content: `Rose: Please provide a valid skylanderId for the amount you want to check of a card.`
+                });
+                return;
+            }
+
+            // Zoek de kaart in de inventaris op basis van de skylanderId
+            const existingCardIndex = userProfile.cardInventory.findIndex(card => {
+                if (card.skylanderid !== undefined && card.skylanderid !== null) {
+                    // Controleer of de skylanderId van de kaart overeenkomt met het doel-skylanderId
+                    return card.skylanderid.toString() === targetSkylanderId.toString();
+                }
+                return false;
+            });
+
+            // Controleer of de kaart is gevonden
+            if (existingCardIndex === -1) {
+                await interaction.editReply({
+                    content: `Rose: You don't have a card with that Id in your Inventory. Please use another Id`
+                });
+                return;
+            }
+
+             // Haal de gevonden kaart op
+             const existingCard = userProfile.cardInventory[existingCardIndex];
+             const cardCount = existingCard.count;
+             const cardName = existingCard.name;
+             const cardId = existingCard.skylanderid;
+
+            await interaction.editReply({
+                content: `Rose: you have ${cardCount} card(s) of the ${cardName} card with ${cardId} as id`
             })
         }
     }
